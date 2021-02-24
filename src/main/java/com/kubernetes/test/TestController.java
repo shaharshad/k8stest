@@ -8,6 +8,6 @@ public class TestController {
 
     @GetMapping("/status")
     public String test(){
-        return "Application is up!";
+        return "Application is up with Docker!";
     }
 }
