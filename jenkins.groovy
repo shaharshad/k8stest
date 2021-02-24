@@ -16,23 +16,17 @@ pipeline {
             }
         }
 
-        stage('Docker build') {
+        stage('Docker build & Deploy') {
             steps {
                 script {
-                    docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
-        }
-
-        stage('Deploy Image') {
-            steps{
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
+                    docker.withRegistry('http://localhost:5000') {
+                        def customImage = docker.build("my-image:${env.BUILD_ID}")
+                        customImage.push()
                     }
                 }
             }
         }
+
 
     }
 }
